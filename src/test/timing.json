@@ -1,0 +1,159 @@
+[
+  [
+    {
+      "token": "Hello",
+      "start": 0,
+      "stop": 386
+    },
+    {
+      "token": "here",
+      "start": 386,
+      "stop": 386
+    },
+    {
+      "token": "The",
+      "start": 386,
+      "stop": 508
+    },
+    {
+      "token": "camera",
+      "start": 508,
+      "stop": 1041
+    },
+    {
+      "token": "opens",
+      "start": 1041,
+      "stop": 1354
+    },
+    {
+      "token": "on",
+      "start": 1354,
+      "stop": 1513
+    },
+    {
+      "token": "a",
+      "start": 1513,
+      "stop": 1619
+    },
+    {
+      "token": "quiet",
+      "start": 1619,
+      "stop": 2125
+    },
+    {
+      "token": "village,",
+      "start": 2125,
+      "stop": 2550
+    },
+    {
+      "token": "a",
+      "start": 2701,
+      "stop": 2800
+    },
+    {
+      "token": "clock",
+      "start": 2800,
+      "stop": 3069
+    },
+    {
+      "token": "tower",
+      "start": 3069,
+      "stop": 3490
+    },
+    {
+      "token": "looming",
+      "start": 3490,
+      "stop": 3829
+    },
+    {
+      "token": "in",
+      "start": 3829,
+      "stop": 3922
+    },
+    {
+      "token": "the",
+      "start": 3922,
+      "stop": 4057
+    },
+    {
+      "token": "background.",
+      "start": 4057,
+      "stop": 4728
+    },
+    {
+      "token": "Emma",
+      "start": 5128,
+      "stop": 5420
+    },
+    {
+      "token": "is",
+      "start": 5420,
+      "stop": 5541
+    },
+    {
+      "token": "walking",
+      "start": 5541,
+      "stop": 5940
+    },
+    {
+      "token": "alone,",
+      "start": 5940,
+      "stop": 6490
+    },
+    {
+      "token": "glancing",
+      "start": 6641,
+      "stop": 7179
+    },
+    {
+      "token": "at",
+      "start": 7179,
+      "stop": 7296
+    },
+    {
+      "token": "the",
+      "start": 7296,
+      "stop": 7396
+    },
+    {
+      "token": "silent",
+      "start": 7396,
+      "stop": 7847
+    },
+    {
+      "token": "tower.",
+      "start": 7847,
+      "stop": 8281
+    },
+    {
+      "token": "She",
+      "start": 8681,
+      "stop": 8877
+    },
+    {
+      "token": "hears",
+      "start": 8877,
+      "stop": 9200
+    },
+    {
+      "token": "a",
+      "start": 9200,
+      "stop": 9257
+    },
+    {
+      "token": "soft,",
+      "start": 9257,
+      "stop": 9651
+    },
+    {
+      "token": "distant",
+      "start": 9802,
+      "stop": 10258
+    },
+    {
+      "token": "voice.",
+      "start": 10258,
+      "stop": 10697
+    }
+  ]
+]

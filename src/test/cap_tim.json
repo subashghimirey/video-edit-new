@@ -1,0 +1,459 @@
+[
+  [
+  {
+    "token": "“Humphrey”",
+    "start": 0,
+    "stop": 558
+  },
+  {
+    "token": "I",
+    "start": 558,
+    "stop": 649
+  },
+  {
+    "token": "yell",
+    "start": 649,
+    "stop": 996
+  },
+  {
+    "token": "banging",
+    "start": 996,
+    "stop": 1315
+  },
+  {
+    "token": "my",
+    "start": 1315,
+    "stop": 1468
+  },
+  {
+    "token": "fist",
+    "start": 1468,
+    "stop": 1796
+  },
+  {
+    "token": "against",
+    "start": 1796,
+    "stop": 2228
+  },
+  {
+    "token": "the",
+    "start": 2228,
+    "stop": 2346
+  },
+  {
+    "token": "observation",
+    "start": 2346,
+    "stop": 3091
+  },
+  {
+    "token": "deck",
+    "start": 3091,
+    "stop": 3284
+  },
+  {
+    "token": "door",
+    "start": 3284,
+    "stop": 3545
+  },
+  {
+    "token": "“There’s",
+    "start": 3545,
+    "stop": 3787
+  },
+  {
+    "token": "something",
+    "start": 3787,
+    "stop": 4238
+  },
+  {
+    "token": "wrong",
+    "start": 4238,
+    "stop": 4549
+  },
+  {
+    "token": "with",
+    "start": 4549,
+    "stop": 4755
+  },
+  {
+    "token": "Jansen",
+    "start": 4755,
+    "stop": 5165
+  },
+  {
+    "token": "Humphrey”",
+    "start": 5165,
+    "stop": 5657
+  },
+  {
+    "token": "I",
+    "start": 5657,
+    "stop": 5792
+  },
+  {
+    "token": "try",
+    "start": 5792,
+    "stop": 6102
+  },
+  {
+    "token": "to",
+    "start": 6102,
+    "stop": 6227
+  },
+  {
+    "token": "push",
+    "start": 6227,
+    "stop": 6532
+  },
+  {
+    "token": "the",
+    "start": 6532,
+    "stop": 6628
+  },
+  {
+    "token": "door",
+    "start": 6628,
+    "stop": 6922
+  },
+  {
+    "token": "open",
+    "start": 6922,
+    "stop": 7288
+  },
+  {
+    "token": "but",
+    "start": 7439,
+    "stop": 7611
+  },
+  {
+    "token": "it’s",
+    "start": 7611,
+    "stop": 7730
+  },
+  {
+    "token": "been",
+    "start": 7730,
+    "stop": 7920
+  },
+  {
+    "token": "barricaded",
+    "start": 7920,
+    "stop": 8596
+  },
+  {
+    "token": "from",
+    "start": 8596,
+    "stop": 8815
+  },
+  {
+    "token": "the",
+    "start": 8815,
+    "stop": 8949
+  },
+  {
+    "token": "other",
+    "start": 8949,
+    "stop": 9167
+  },
+  {
+    "token": "side",
+    "start": 9167,
+    "stop": 9602
+  },
+  {
+    "token": "How",
+    "start": 9752,
+    "stop": 9929
+  },
+  {
+    "token": "long",
+    "start": 9929,
+    "stop": 10228
+  },
+  {
+    "token": "has",
+    "start": 10228,
+    "stop": 10381
+  },
+  {
+    "token": "Humphrey",
+    "start": 10381,
+    "stop": 10865
+  },
+  {
+    "token": "been",
+    "start": 10865,
+    "stop": 10997
+  },
+  {
+    "token": "holed",
+    "start": 10997,
+    "stop": 11417
+  },
+  {
+    "token": "up",
+    "start": 11417,
+    "stop": 11596
+  },
+  {
+    "token": "in",
+    "start": 11596,
+    "stop": 11702
+  },
+  {
+    "token": "there…three",
+    "start": 11702,
+    "stop": 12423
+  },
+  {
+    "token": "months?",
+    "start": 12423,
+    "stop": 12883
+  },
+  {
+    "token": "Three",
+    "start": 13283,
+    "stop": 13497
+  },
+  {
+    "token": "years?",
+    "start": 13497,
+    "stop": 13892
+  },
+  {
+    "token": "It’s",
+    "start": 14292,
+    "stop": 14456
+  },
+  {
+    "token": "hard",
+    "start": 14456,
+    "stop": 14767
+  },
+  {
+    "token": "to",
+    "start": 14767,
+    "stop": 14894
+  },
+  {
+    "token": "tell",
+    "start": 14894,
+    "stop": 15144
+  },
+  {
+    "token": "“Humphrey”",
+    "start": 15144,
+    "stop": 15639
+  },
+  {
+    "token": "I",
+    "start": 15639,
+    "stop": 15730
+  },
+  {
+    "token": "yell",
+    "start": 15730,
+    "stop": 16064
+  },
+  {
+    "token": "one",
+    "start": 16064,
+    "stop": 16321
+  },
+  {
+    "token": "last",
+    "start": 16321,
+    "stop": 16638
+  },
+  {
+    "token": "time",
+    "start": 16638,
+    "stop": 17035
+  },
+  {
+    "token": "before",
+    "start": 17186,
+    "stop": 17596
+  },
+  {
+    "token": "giving",
+    "start": 17596,
+    "stop": 17880
+  },
+  {
+    "token": "up",
+    "start": 17880,
+    "stop": 18031
+  },
+  {
+    "token": "This",
+    "start": 18031,
+    "stop": 18205
+  },
+  {
+    "token": "whole",
+    "start": 18205,
+    "stop": 18489
+  },
+  {
+    "token": "ship",
+    "start": 18489,
+    "stop": 18769
+  },
+  {
+    "token": "is",
+    "start": 18769,
+    "stop": 18916
+  },
+  {
+    "token": "going",
+    "start": 18916,
+    "stop": 19196
+  },
+  {
+    "token": "crazy",
+    "start": 19196,
+    "stop": 19603
+  },
+  {
+    "token": "Four",
+    "start": 19603,
+    "stop": 19875
+  },
+  {
+    "token": "years",
+    "start": 19875,
+    "stop": 20156
+  },
+  {
+    "token": "in",
+    "start": 20156,
+    "stop": 20287
+  },
+  {
+    "token": "space",
+    "start": 20287,
+    "stop": 20746
+  },
+  {
+    "token": "and",
+    "start": 20897,
+    "stop": 21042
+  },
+  {
+    "token": "I’m",
+    "start": 21042,
+    "stop": 21168
+  },
+  {
+    "token": "the",
+    "start": 21168,
+    "stop": 21294
+  },
+  {
+    "token": "only",
+    "start": 21294,
+    "stop": 21654
+  },
+  {
+    "token": "one",
+    "start": 21654,
+    "stop": 21857
+  },
+  {
+    "token": "holding",
+    "start": 21857,
+    "stop": 22286
+  },
+  {
+    "token": "it",
+    "start": 22286,
+    "stop": 22428
+  },
+  {
+    "token": "together",
+    "start": 22428,
+    "stop": 22922
+  },
+  {
+    "token": "I",
+    "start": 22922,
+    "stop": 23026
+  },
+  {
+    "token": "make",
+    "start": 23026,
+    "stop": 23299
+  },
+  {
+    "token": "my",
+    "start": 23299,
+    "stop": 23459
+  },
+  {
+    "token": "way",
+    "start": 23459,
+    "stop": 23627
+  },
+  {
+    "token": "to",
+    "start": 23627,
+    "stop": 23759
+  },
+  {
+    "token": "the",
+    "start": 23759,
+    "stop": 23853
+  },
+  {
+    "token": "Navigation",
+    "start": 23853,
+    "stop": 24584
+  },
+  {
+    "token": "room",
+    "start": 24584,
+    "stop": 24841
+  },
+  {
+    "token": "to",
+    "start": 24841,
+    "stop": 24937
+  },
+  {
+    "token": "find",
+    "start": 24937,
+    "stop": 25286
+  },
+  {
+    "token": "Jansen",
+    "start": 25286,
+    "stop": 25742
+  },
+  {
+    "token": "in",
+    "start": 25742,
+    "stop": 25853
+  },
+  {
+    "token": "a",
+    "start": 25853,
+    "stop": 25922
+  },
+  {
+    "token": "state",
+    "start": 25922,
+    "stop": 26242
+  },
+  {
+    "token": "of",
+    "start": 26242,
+    "stop": 26345
+  },
+  {
+    "token": "mania",
+    "start": 26345,
+    "stop": 26860
+  }
+]
+]

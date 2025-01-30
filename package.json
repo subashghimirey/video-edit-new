@@ -1,0 +1,93 @@
+{
+  "name": "@diffusionstudio/core",
+  "private": false,
+  "version": "1.2.0",
+  "type": "module",
+  "description": "Build bleeding edge video processing applications",
+  "files": [
+    "dist/*"
+  ],
+  "types": "./dist/index.d.ts",
+  "module": "./dist/ds.js",
+  "exports": {
+    ".": {
+      "import": "./dist/ds.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "license": "MPL-2.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "format": "npx @biomejs/biome format --write ./src",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "release": "tsc && vite build && npm publish",
+    "docs": "typedoc src/index.ts --plugin typedoc-plugin-markdown --out ./docs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.2",
+    "@types/dom-webcodecs": "^0.1.11",
+    "@types/node": "^22.5.5",
+    "@types/wicg-file-system-access": "^2023.10.5",
+    "@vitest/coverage-v8": "^2.1.1",
+    "@vitest/web-worker": "^2.1.1",
+    "@webgpu/types": "^0.1.46",
+    "jsdom": "^25.0.1",
+    "rollup-plugin-node-externals": "^7.1.3",
+    "typedoc": "^0.26.7",
+    "typedoc-plugin-markdown": "^4.2.8",
+    "typescript": "^5.6.2",
+    "user-agent-data-types": "^0.4.2",
+    "vite": "^5.4.7",
+    "vite-plugin-dts": "^4.2.1",
+    "vitest": "^2.1.1",
+    "vitest-canvas-mock": "^0.3.3"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "ibm-watson": "^10.0.0",
+    "mp4-muxer": "^5.1.3",
+    "node-fetch": "^3.3.2",
+    "ws": "^8.18.0"
+  },
+  "peerDependencies": {
+    "pixi-filters": ">=6.0.0",
+    "pixi.js": ">=8.0.0"
+  },
+  "author": "Diffusion Studio GmbH",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:diffusionstudio/core.git"
+  },
+  "keywords": [
+    "mp4",
+    "web",
+    "aac",
+    "h264",
+    "opus",
+    "edit",
+    "webgl",
+    "video",
+    "audio",
+    "record",
+    "canvas",
+    "tiktok",
+    "webgpu",
+    "encode",
+    "editor",
+    "decode",
+    "editing",
+    "youtube",
+    "recorder",
+    "automate",
+    "webcodecs",
+    "client-side",
+    "programmatic",
+    "browser-based"
+  ]
+}
