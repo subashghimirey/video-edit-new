@@ -1,17 +1,10 @@
-import * as core from "../src";
-import captions from "../src/test/cap_tim.json";
-import { setupControls } from "./controls";
-import { setupTimeline } from "./timeline";
+import * as core from '../src';
+import captions from '../src/test/cap_tim.json';
+import { setupControls } from './controls';
+import { setupTimeline } from './timeline';
 
-// Define target dimensions for 9:16 aspect ratio at 1920x1080
-const TARGET_WIDTH = 1080; // For 9:16 ratio, width is smaller
-const TARGET_HEIGHT = 1920; // For 9:16 ratio, height is larger
-
-// Initialize the composition with target dimensions
-const composition = new core.Composition({
-  width: TARGET_WIDTH,
-  height: TARGET_HEIGHT,
-});
+// Initialize the composition
+const composition = new core.Composition();
 
 setupControls(composition);
 setupTimeline(composition);
@@ -46,7 +39,7 @@ const captionStyles: Record<string, CaptionGrouping> = {
   dramatic: {
     wordsPerFrame: 2,  // Show two words at a time
     style: {
-      fontSize: 16,
+      fontSize: 28,
       fillStyle: '#FFD700', // Gold color
       stroke: {
         color: '#000000',
@@ -123,15 +116,14 @@ const captionStyles: Record<string, CaptionGrouping> = {
 // Function to get video dimensions
 async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
   return new Promise((resolve, reject) => {
-    const tempVideo = document.createElement("video");
+    const tempVideo = document.createElement('video');
     tempVideo.onloadedmetadata = () => {
       resolve({
         width: tempVideo.videoWidth,
-        height: tempVideo.videoHeight,
+        height: tempVideo.videoHeight
       });
     };
-    tempVideo.onerror = () =>
-      reject(new Error("Failed to load video metadata"));
+    tempVideo.onerror = () => reject(new Error('Failed to load video metadata'));
     tempVideo.src = videoPath;
   });
 }
@@ -186,64 +178,64 @@ async function loadVideo(videoPath: string, captionStyle: string = 'default') {
   try {
     // Clear existing video clips
     composition.findClips(core.VideoClip).forEach(clip => composition.remove(clip));
+    
+    // Clear existing text clips (captions)
+    composition.findClips(core.TextClip).forEach(clip => composition.remove(clip));
 
     // Load video metadata first
     const dimensions = await getVideoDimensions(videoPath);
-    console.log("Video dimensions: ", dimensions);
-
+    
     // Load the video source
     const videoSource = await core.VideoSource.from(videoPath);
 
-    // Calculate scaling factors for both dimensions
-    const scaleWidth = TARGET_WIDTH / dimensions.width;
-    const scaleHeight = TARGET_HEIGHT / dimensions.height;
+    // Calculate aspect ratios using the dimensions we got separately
+    const videoAspectRatio = dimensions.width / dimensions.height;
+    const compositionAspectRatio = composition.width / composition.height;
 
-    // Use the larger scale to ensure the video fills the frame
-    // This might crop some content but ensures no black bars
-    const scale = Math.max(scaleWidth, scaleHeight);
-
-    console.log("Scale factor: ", scale);
+    // Determine scaling factor
+    const scale = videoAspectRatio > compositionAspectRatio
+      ? composition.width / dimensions.width
+      : composition.height / dimensions.height;
 
     // Add video clip with proper scaling
     const video = await composition.add(
       new core.VideoClip(videoSource, {
         volume: 0.1,
         anchor: 0.5,
-        position: "center",
+        position: 'center',
         scale,
       })
     );
 
-    // Add captions
-    captions.forEach((segment) => {
-      segment.forEach((caption) => {
-        composition.add(
-          new core.TextClip({
-            text: caption.token,
-            start: new core.Timestamp(caption.start),
-            stop: new core.Timestamp(caption.stop),
-            textAlign: 'center',
-            textBaseline: 'middle',
-            fontSize: 20,
-            stroke: {
-              width: 2,
-              color: '#000000',
-            },
-            x: composition.width / 2,
-            y: composition.height * 0.85,
-          })
-        );
-      });
+    // Get selected caption style and group captions
+    const styleConfig = captionStyles[captionStyle];
+    const groupedCaptions = groupCaptions(captions, styleConfig.wordsPerFrame);
+
+    // Add captions with selected style
+    groupedCaptions.forEach(group => {
+      composition.add(
+        new core.TextClip({
+          text: group.tokens.join(' '), // Join the grouped words with spaces
+          start: new core.Timestamp(group.start),
+          stop: new core.Timestamp(group.stop),
+          x: composition.width / 2,
+          y: composition.height * 0.85,
+          ...styleConfig.style,
+        })
+      );
     });
+
   } catch (error) {
-    console.error("Error loading video:", error);
+    console.error('Error loading video:', error);
     throw error;
   }
 }
 
 // Set up video selection handling
 const videoList = document.getElementById('video-list') as HTMLSelectElement;
+const captionStyleSelect = document.getElementById('caption-style') as HTMLSelectElement;
 
+// Handle video selection change
 videoList.addEventListener('change', async (event) => {
   const selectedVideoPath = (event.target as HTMLSelectElement).value;
   const selectedStyle = captionStyleSelect.value;
@@ -262,7 +254,7 @@ await loadVideo(videoList.value, 'default');
 
 // Add audio
 await composition.add(
-  new core.AudioClip(await core.AudioSource.from("/speech.wav"), {
+  new core.AudioClip(await core.AudioSource.from('/speech.wav'), {
     transcript: core.Transcript.fromJSON(captions).optimize(),
   })
 );
