@@ -8,15 +8,25 @@
 </head>
 <body bgcolor="brown" color="black">
   <div id="app">
-    <!-- Add a dropdown for video selection -->
     <div id="video-selector">
-      <label for="video-list">Choose a video:</label>
-      <select id="video-list">
-        
-        <option value="/leaf.mp4">Sample Video 2</option>
-        <option value="/glass-sea.mp4">Sample Video 3</option>
-        
-      </select>
+      <div class="control-group">
+        <label for="video-list">Choose a video:</label>
+        <select id="video-list">
+          <option value="/leaf.mp4">Sample Video 2</option>
+          <option value="/glass-sea.mp4">Sample Video 3</option>
+        </select>
+      </div>
+      
+      <div class="control-group">
+        <label for="caption-style">Caption Style:</label>
+        <select id="caption-style">
+          <option value="default">Default Style</option>
+          <option value="dramatic">Dramatic</option>
+          <option value="modern">Modern</option>
+          <option value="subtitle">Movie Subtitle</option>
+          <option value="minimal">Minimal</option>
+        </select>
+      </div>
     </div>
 
     <div id="player-container">
