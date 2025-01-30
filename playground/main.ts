@@ -1,10 +1,17 @@
-import * as core from '../src';
-import captions from '../src/test/cap_tim.json';
-import { setupControls } from './controls';
-import { setupTimeline } from './timeline';
+import * as core from "../src";
+import captions from "../src/test/cap_tim.json";
+import { setupControls } from "./controls";
+import { setupTimeline } from "./timeline";
 
-// Initialize the composition
-const composition = new core.Composition();
+// Define target dimensions for 9:16 aspect ratio at 1920x1080
+const TARGET_WIDTH = 1080; // For 9:16 ratio, width is smaller
+const TARGET_HEIGHT = 1920; // For 9:16 ratio, height is larger
+
+// Initialize the composition with target dimensions
+const composition = new core.Composition({
+  width: TARGET_WIDTH,
+  height: TARGET_HEIGHT,
+});
 
 setupControls(composition);
 setupTimeline(composition);
@@ -17,14 +24,15 @@ interface VideoMetadata {
 // Function to get video dimensions
 async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
   return new Promise((resolve, reject) => {
-    const tempVideo = document.createElement('video');
+    const tempVideo = document.createElement("video");
     tempVideo.onloadedmetadata = () => {
       resolve({
         width: tempVideo.videoWidth,
-        height: tempVideo.videoHeight
+        height: tempVideo.videoHeight,
       });
     };
-    tempVideo.onerror = () => reject(new Error('Failed to load video metadata'));
+    tempVideo.onerror = () =>
+      reject(new Error("Failed to load video metadata"));
     tempVideo.src = videoPath;
   });
 }
@@ -33,34 +41,38 @@ async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
 async function loadVideo(videoPath: string) {
   try {
     // Clear existing video clips
-    composition.findClips(core.VideoClip).forEach(clip => composition.remove(clip));
+    composition
+      .findClips(core.VideoClip)
+      .forEach((clip) => composition.remove(clip));
 
     // Load video metadata first
     const dimensions = await getVideoDimensions(videoPath);
-    
+    console.log("Video dimensions: ", dimensions);
+
     // Load the video source
     const videoSource = await core.VideoSource.from(videoPath);
 
-    // Calculate aspect ratios using the dimensions we got separately
-    const videoAspectRatio = dimensions.width / dimensions.height;
-    const compositionAspectRatio = composition.width / composition.height;
+    // Calculate scaling factors for both dimensions
+    const scaleWidth = TARGET_WIDTH / dimensions.width;
+    const scaleHeight = TARGET_HEIGHT / dimensions.height;
 
-    // Determine scaling factor
-    const scale = videoAspectRatio > compositionAspectRatio
-      ? composition.width / dimensions.width
-      : composition.height / dimensions.height;
+    // Use the larger scale to ensure the video fills the frame
+    // This might crop some content but ensures no black bars
+    const scale = Math.max(scaleWidth, scaleHeight);
+
+    console.log("Scale factor: ", scale);
 
     // Add video clip with proper scaling
     const video = await composition.add(
       new core.VideoClip(videoSource, {
         volume: 0.1,
         anchor: 0.5,
-        position: 'center',
+        position: "center",
         scale,
       })
     );
 
-    // Add captions
+    // Add captions - adjusted Y position for new aspect ratio
     captions.forEach((segment) => {
       segment.forEach((caption) => {
         composition.add(
@@ -68,30 +80,29 @@ async function loadVideo(videoPath: string) {
             text: caption.token,
             start: new core.Timestamp(caption.start),
             stop: new core.Timestamp(caption.stop),
-            textAlign: 'center',
-            textBaseline: 'middle',
-            fontSize: 20,
+            textAlign: "center",
+            textBaseline: "middle",
+            fontSize: 30, // Increased font size for larger resolution
             stroke: {
-              width: 2,
-              color: '#000000',
+              width: 3, // Increased stroke width for larger resolution
+              color: "#000000",
             },
-            x: composition.width / 2,
-            y: composition.height * 0.85,
+            x: TARGET_WIDTH / 2,
+            y: TARGET_HEIGHT * 0.85,
           })
         );
       });
     });
-
   } catch (error) {
-    console.error('Error loading video:', error);
+    console.error("Error loading video:", error);
     throw error;
   }
 }
 
 // Set up video selection handling
-const videoList = document.getElementById('video-list') as HTMLSelectElement;
+const videoList = document.getElementById("video-list") as HTMLSelectElement;
 
-videoList.addEventListener('change', async (event) => {
+videoList.addEventListener("change", async (event) => {
   const selectedVideoPath = (event.target as HTMLSelectElement).value;
   await loadVideo(selectedVideoPath);
 });
@@ -101,7 +112,7 @@ await loadVideo(videoList.value);
 
 // Add audio
 await composition.add(
-  new core.AudioClip(await core.AudioSource.from('/speech.wav'), {
+  new core.AudioClip(await core.AudioSource.from("/speech.wav"), {
     transcript: core.Transcript.fromJSON(captions).optimize(),
   })
 );
