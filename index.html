@@ -8,7 +8,12 @@
 </head>
 <body bgcolor="brown" color="black">
   <div id="app">
+    <button id="open-text-to-video">Open Text to Video Generator</button>
     <div id="video-selector">
+      <div class="control-group">
+        <label for="video-upload">Upload your video:</label>
+        <input type="file" id="video-upload" accept="video/*" />
+      </div>
       <div class="control-group">
         <label for="video-list">Choose a video:</label>
         <select id="video-list">
@@ -16,7 +21,6 @@
           <option value="/glass-sea.mp4">Sample Video 3</option>
         </select>
       </div>
-      
       <div class="control-group">
         <label for="caption-style">Caption Style:</label>
         <select id="caption-style">
@@ -28,7 +32,6 @@
         </select>
       </div>
     </div>
-
     <div id="player-container">
       <div id="player"></div>
       <div id="progress" style="display: none;">
@@ -57,6 +60,10 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     lucide.createIcons();
+
+    document.getElementById("open-text-to-video").addEventListener("click", () => {
+      window.location.href = "text-to-video.html";
+    });
   </script>
 </body>
 </html>

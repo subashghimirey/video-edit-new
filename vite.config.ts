@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { nodeExternals } from 'rollup-plugin-node-externals'
-import path from 'node:path';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({

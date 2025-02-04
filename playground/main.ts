@@ -16,16 +16,24 @@ const composition = new core.Composition({
 setupControls(composition);
 setupTimeline(composition);
 
+// Interface definitions
 interface VideoMetadata {
   width: number;
   height: number;
 }
 
-// Add interface to define how tokens should be grouped
 interface CaptionGrouping {
   wordsPerFrame: number;
   style: Partial<core.TextClipProps>;
 }
+
+interface UploadedVideo {
+  url: string;
+  name: string;
+}
+
+// Keep track of uploaded videos
+const uploadedVideos: UploadedVideo[] = [];
 
 // Define caption styles using TextClip properties with grouping information
 const captionStyles: Record<string, CaptionGrouping> = {
@@ -120,6 +128,50 @@ const captionStyles: Record<string, CaptionGrouping> = {
   },
 };
 
+// Function to handle file uploads
+async function handleFileUpload(file: File): Promise<void> {
+  try {
+    // Validate file type
+    if (!file.type.startsWith('video/')) {
+      throw new Error('Please upload a valid video file');
+    }
+
+    // Create object URL for the uploaded file
+    const videoUrl = URL.createObjectURL(file);
+
+    // Add to uploaded videos array
+    uploadedVideos.push({
+      url: videoUrl,
+      name: file.name
+    });
+
+    // Add new option to video-list select
+    const videoList = document.getElementById('video-list') as HTMLSelectElement;
+    const option = document.createElement('option');
+    option.value = videoUrl;
+    option.text = `Uploaded: ${file.name}`;
+    videoList.add(option);
+
+    // Select the newly uploaded video
+    videoList.value = videoUrl;
+
+    // Load the new video
+    await loadVideo(videoUrl, captionStyleSelect.value);
+
+  } catch (error) {
+    console.error('Error handling file upload:', error);
+    alert(`Error uploading video: ${error.message}`);
+  }
+}
+
+// Function to clean up object URLs
+function cleanupUploadedVideos(): void {
+  uploadedVideos.forEach(video => {
+    URL.revokeObjectURL(video.url);
+  });
+  uploadedVideos.length = 0;
+}
+
 // Function to get video dimensions
 async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
   return new Promise((resolve, reject) => {
@@ -136,7 +188,7 @@ async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
   });
 }
 
-// Function to group captions based on style
+// Function to group captions
 function groupCaptions(
   captions: typeof import("../src/test/cap_tim.json"),
   wordsPerFrame: number
@@ -201,6 +253,11 @@ async function loadVideo(videoPath: string, captionStyle: string = "default") {
     const dimensions = await getVideoDimensions(videoPath);
     console.log("Video dimensions: ", dimensions);
 
+    // Check if the video dimensions are valid
+    if (dimensions.width === 0 || dimensions.height === 0) {
+      throw new Error('Invalid video dimensions');
+    }
+
     // Load the video source
     const videoSource = await core.VideoSource.from(videoPath);
 
@@ -240,17 +297,20 @@ async function loadVideo(videoPath: string, captionStyle: string = "default") {
         })
       );
     });
+
   } catch (error) {
     console.error("Error loading video:", error);
+    alert(`Error loading video: ${error.message}`);
     throw error;
   }
 }
 
-// Set up video selection handling
+// Set up event listeners
 const videoList = document.getElementById("video-list") as HTMLSelectElement;
 const captionStyleSelect = document.getElementById(
   "caption-style"
 ) as HTMLSelectElement;
+const fileInput = document.getElementById('video-upload') as HTMLInputElement;
 
 // Handle video selection change
 videoList.addEventListener("change", async (event) => {
@@ -266,12 +326,26 @@ captionStyleSelect.addEventListener("change", async () => {
   await loadVideo(selectedVideoPath, selectedStyle);
 });
 
-// Initial video load
-await loadVideo(videoList.value, "default");
+// Handle file upload
+fileInput.addEventListener('change', async (event) => {
+  const files = (event.target as HTMLInputElement).files;
+  if (files && files.length > 0) {
+    await handleFileUpload(files[0]);
+  }
+});
 
-// Add audio
-await composition.add(
-  new core.AudioClip(await core.AudioSource.from("/speech.wav"), {
-    transcript: core.Transcript.fromJSON(captions).optimize(),
-  })
-);
+// Clean up object URLs when the window is closed/refreshed
+window.addEventListener('beforeunload', cleanupUploadedVideos);
+
+// Initial setup
+(async () => {
+  // Initial video load
+  await loadVideo(videoList.value, "default");
+
+  // Add audio
+  await composition.add(
+    new core.AudioClip(await core.AudioSource.from("/speech.wav"), {
+      transcript: core.Transcript.fromJSON(captions).optimize(),
+    })
+  );
+})(); 
