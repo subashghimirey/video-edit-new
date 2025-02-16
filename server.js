@@ -12,14 +12,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = 5050;
+const port = 3000;
 
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: "1mb" }));
 app.use("/generated", express.static(join(__dirname, "public/generated")));
 
-console.log("Watson API key:", process.env.WATSON_API_KEY);
 // Text-to-speech endpoint
 app.post("/api/text-to-speech", async (req, res) => {
   try {

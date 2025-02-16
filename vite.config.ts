@@ -26,7 +26,7 @@ export default defineConfig(({ command }) => ({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:5050", // Assuming your API server runs on port 3000
+        target: "http://localhost:3000",
         changeOrigin: true,
         secure: false,
       },
