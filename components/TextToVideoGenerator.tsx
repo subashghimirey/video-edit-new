@@ -84,7 +84,7 @@ const TextToSpeechGenerator = () => {
     try {
       const cleanedText = cleanText(inputText);
 
-      const response = await fetch("/api/text-to-speech", {
+     const response = await fetch(`/api/text-to-speech`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
