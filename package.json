@@ -24,7 +24,9 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "release": "tsc && vite build && npm publish",
-    "docs": "typedoc src/index.ts --plugin typedoc-plugin-markdown --out ./docs"
+    "docs": "typedoc src/index.ts --plugin typedoc-plugin-markdown --out ./docs",
+    "server": "node server.js",
+    "start": "concurrently \"npm run dev\" \"npm run server\""
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.2",
@@ -34,8 +36,12 @@
     "@vitest/coverage-v8": "^2.1.1",
     "@vitest/web-worker": "^2.1.1",
     "@webgpu/types": "^0.1.46",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
     "jsdom": "^25.0.1",
+    "postcss": "^8.5.2",
     "rollup-plugin-node-externals": "^7.1.3",
+    "tailwindcss": "^4.0.6",
     "typedoc": "^0.26.7",
     "typedoc-plugin-markdown": "^4.2.8",
     "typescript": "^5.6.2",
@@ -47,6 +53,9 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "fs": "^0.0.1-security",
     "ibm-cloud-sdk-core": "^5.1.2",
     "ibm-watson": "^10.0.0",
