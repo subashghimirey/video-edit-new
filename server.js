@@ -7,12 +7,26 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config(); // If your file is named `.env.local`, use dotenv.config({ path: ".env.local" });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3000;
+
+const WATSON_API_KEY = "gHRYqo6LL2caBO0K7mx3kd_oiF1O0FW49lq3ja0ch1Wy";
+const WATSON_INSTANCE_ID = "f43c1f22-b1b5-4917-b211-cadd55bdcab3";
+const WATSON_SERVICE_URL =
+  "https://api.au-syd.text-to-speech.watson.cloud.ibm.com";
+
+// Debugging: Check if environment variables are loaded
+console.log("Watson API Key:", WATSON_API_KEY);
+console.log("Watson Instance ID:", WATSON_INSTANCE_ID);
+console.log("Watson Service URL:", WATSON_SERVICE_URL);
 
 // Middleware
 app.use(cors());
@@ -24,12 +38,19 @@ app.post("/api/text-to-speech", async (req, res) => {
   try {
     const { text, voice } = req.body;
 
+    // Ensure API key is available
+    if (!WATSON_API_KEY || !WATSON_SERVICE_URL) {
+      return res
+        .status(500)
+        .json({ error: "Watson API credentials are missing" });
+    }
+
     // Initialize Watson TTS
     const tts = new TextToSpeechV1({
       authenticator: new IamAuthenticator({
-        apikey: process.env.WATSON_API_KEY,
+        apikey: WATSON_API_KEY,
       }),
-      serviceUrl: process.env.WATSON_SERVICE_URL,
+      serviceUrl: WATSON_SERVICE_URL,
     });
 
     // Get access token
@@ -38,13 +59,13 @@ app.post("/api/text-to-speech", async (req, res) => {
 
     // Create WebSocket URL
     const wsUrl = new URL(
-      `/instances/${process.env.WATSON_INSTANCE_ID}/v1/synthesize`,
-      process.env.WATSON_SERVICE_URL.replace("https", "wss")
+      `/instances/${WATSON_INSTANCE_ID}/v1/synthesize`,
+      WATSON_SERVICE_URL.replace("https", "wss")
     );
     wsUrl.searchParams.set("access_token", accessToken);
     wsUrl.searchParams.set("voice", voice);
 
-    // Generate unique filename based on timestamp
+    // Generate unique filename
     const timestamp = Date.now();
     const audioFilename = `speech_${timestamp}.wav`;
     const timingFilename = `timing_${timestamp}.json`;
@@ -117,7 +138,7 @@ app.post("/api/text-to-speech", async (req, res) => {
           const timingPath = join(timingDir, timingFilename);
 
           await writeFile(audioPath, audioBuffer);
-          await writeFile(timingPath, JSON.stringify([timingData], null, 2));
+          await writeFile(timingPath, JSON.stringify(timingData, null, 2));
 
           // Send response
           res.status(200).json({
@@ -141,6 +162,7 @@ app.post("/api/text-to-speech", async (req, res) => {
   }
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
