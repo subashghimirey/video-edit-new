@@ -1,0 +1,24 @@
+[
+  [
+    {
+      "token": "what",
+      "start": 0,
+      "stop": 243
+    },
+    {
+      "token": "happened",
+      "start": 243,
+      "stop": 607
+    },
+    {
+      "token": "just",
+      "start": 607,
+      "stop": 893
+    },
+    {
+      "token": "now",
+      "start": 893,
+      "stop": 1236
+    }
+  ]
+]

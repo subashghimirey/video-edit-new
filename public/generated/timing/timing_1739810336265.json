@@ -1,0 +1,319 @@
+[
+  [
+    {
+      "token": "Liam",
+      "start": 0,
+      "stop": 335
+    },
+    {
+      "token": "found",
+      "start": 335,
+      "stop": 637
+    },
+    {
+      "token": "an",
+      "start": 637,
+      "stop": 764
+    },
+    {
+      "token": "old",
+      "start": 764,
+      "stop": 960
+    },
+    {
+      "token": "key",
+      "start": 960,
+      "stop": 1230
+    },
+    {
+      "token": "in",
+      "start": 1230,
+      "stop": 1329
+    },
+    {
+      "token": "his",
+      "start": 1329,
+      "stop": 1529
+    },
+    {
+      "token": "grandmother’s",
+      "start": 1529,
+      "stop": 2161
+    },
+    {
+      "token": "attic",
+      "start": 2161,
+      "stop": 2505
+    },
+    {
+      "token": "Curious",
+      "start": 2622,
+      "stop": 3098
+    },
+    {
+      "token": "he",
+      "start": 3098,
+      "stop": 3234
+    },
+    {
+      "token": "searched",
+      "start": 3234,
+      "stop": 3604
+    },
+    {
+      "token": "the",
+      "start": 3604,
+      "stop": 3676
+    },
+    {
+      "token": "house",
+      "start": 3676,
+      "stop": 4108
+    },
+    {
+      "token": "until",
+      "start": 4109,
+      "stop": 4423
+    },
+    {
+      "token": "he",
+      "start": 4423,
+      "stop": 4584
+    },
+    {
+      "token": "discovered",
+      "start": 4584,
+      "stop": 5140
+    },
+    {
+      "token": "a",
+      "start": 5140,
+      "stop": 5196
+    },
+    {
+      "token": "hidden",
+      "start": 5196,
+      "stop": 5530
+    },
+    {
+      "token": "door",
+      "start": 5530,
+      "stop": 5816
+    },
+    {
+      "token": "behind",
+      "start": 5816,
+      "stop": 6173
+    },
+    {
+      "token": "a",
+      "start": 6173,
+      "stop": 6231
+    },
+    {
+      "token": "bookshelf",
+      "start": 6231,
+      "stop": 6826
+    },
+    {
+      "token": "With",
+      "start": 6957,
+      "stop": 7136
+    },
+    {
+      "token": "a",
+      "start": 7136,
+      "stop": 7211
+    },
+    {
+      "token": "trembling",
+      "start": 7211,
+      "stop": 7694
+    },
+    {
+      "token": "hand",
+      "start": 7694,
+      "stop": 8051
+    },
+    {
+      "token": "he",
+      "start": 8052,
+      "stop": 8235
+    },
+    {
+      "token": "turned",
+      "start": 8235,
+      "stop": 8524
+    },
+    {
+      "token": "the",
+      "start": 8524,
+      "stop": 8594
+    },
+    {
+      "token": "key",
+      "start": 8594,
+      "stop": 8945
+    },
+    {
+      "token": "revealing",
+      "start": 9084,
+      "stop": 9569
+    },
+    {
+      "token": "a",
+      "start": 9569,
+      "stop": 9646
+    },
+    {
+      "token": "dusty",
+      "start": 9646,
+      "stop": 10030
+    },
+    {
+      "token": "room",
+      "start": 10030,
+      "stop": 10308
+    },
+    {
+      "token": "filled",
+      "start": 10308,
+      "stop": 10608
+    },
+    {
+      "token": "with",
+      "start": 10608,
+      "stop": 10786
+    },
+    {
+      "token": "journals",
+      "start": 10786,
+      "stop": 11209
+    },
+    {
+      "token": "and",
+      "start": 11209,
+      "stop": 11340
+    },
+    {
+      "token": "photographs",
+      "start": 11340,
+      "stop": 11963
+    },
+    {
+      "token": "of",
+      "start": 11963,
+      "stop": 12057
+    },
+    {
+      "token": "a",
+      "start": 12057,
+      "stop": 12088
+    },
+    {
+      "token": "life",
+      "start": 12088,
+      "stop": 12473
+    },
+    {
+      "token": "unknown",
+      "start": 12473,
+      "stop": 12872
+    },
+    {
+      "token": "to",
+      "start": 12872,
+      "stop": 12970
+    },
+    {
+      "token": "him",
+      "start": 12970,
+      "stop": 13234
+    },
+    {
+      "token": "One",
+      "start": 13380,
+      "stop": 13695
+    },
+    {
+      "token": "journal",
+      "start": 13695,
+      "stop": 14037
+    },
+    {
+      "token": "bore",
+      "start": 14037,
+      "stop": 14273
+    },
+    {
+      "token": "his",
+      "start": 14273,
+      "stop": 14469
+    },
+    {
+      "token": "name",
+      "start": 14469,
+      "stop": 14772
+    },
+    {
+      "token": "Flipping",
+      "start": 14772,
+      "stop": 15182
+    },
+    {
+      "token": "through",
+      "start": 15182,
+      "stop": 15370
+    },
+    {
+      "token": "its",
+      "start": 15370,
+      "stop": 15542
+    },
+    {
+      "token": "pages",
+      "start": 15542,
+      "stop": 16047
+    },
+    {
+      "token": "he",
+      "start": 16048,
+      "stop": 16188
+    },
+    {
+      "token": "read",
+      "start": 16188,
+      "stop": 16409
+    },
+    {
+      "token": "about",
+      "start": 16409,
+      "stop": 16670
+    },
+    {
+      "token": "adventures",
+      "start": 16670,
+      "stop": 17250
+    },
+    {
+      "token": "he",
+      "start": 17250,
+      "stop": 17396
+    },
+    {
+      "token": "had",
+      "start": 17396,
+      "stop": 17525
+    },
+    {
+      "token": "never",
+      "start": 17525,
+      "stop": 17829
+    },
+    {
+      "token": "lived—yet",
+      "start": 17829,
+      "stop": 18429
+    }
+  ]
+]

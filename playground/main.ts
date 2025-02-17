@@ -1,4 +1,3 @@
-import { start } from "repl";
 import * as core from "../src";
 import captions from "../src/test/cap_tim.json";
 import { setupControls } from "./controls";
@@ -284,6 +283,7 @@ function groupCaptions(
   return groupedCaptions;
 }
 
+
 async function fetchAudioDuration() {
     if (!audioUrl) {
         throw new Error('No audio URL provided');
@@ -336,7 +336,7 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
     console.log("Scale factor: ", scale);
 
     let startTime = 0;
-    let stopTime = 10; // Default stop time
+    let stopTime = 1000; // Default stop time
 
      if (audioUrl) {
             try {
@@ -355,7 +355,7 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
         position: "center",
         scale,
       })
-      .subclip(startTime, stopTime+ 10)
+      .subclip(startTime, stopTime + 50)
       .offsetBy(0)
     );
 
