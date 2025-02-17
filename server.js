@@ -138,7 +138,7 @@ app.post("/api/text-to-speech", async (req, res) => {
           const timingPath = join(timingDir, timingFilename);
 
           await writeFile(audioPath, audioBuffer);
-          await writeFile(timingPath, JSON.stringify(timingData, null, 2));
+          await writeFile(timingPath, JSON.stringify([timingData], null, 2));
 
           // Send response
           res.status(200).json({
@@ -162,7 +162,11 @@ app.post("/api/text-to-speech", async (req, res) => {
   }
 });
 
+
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+

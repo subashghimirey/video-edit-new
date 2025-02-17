@@ -3,71 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DS Playground</title>
+  <title>Text to Video Generator</title>
   <link rel="stylesheet" href="/playground/index.css">
 </head>
-<body bgcolor="brown" color="black">
-  <div id="app">
-    <button id="open-text-to-video">Open Text to Video Generator</button>
-    <div id="video-selector">
-      <div class="control-group">
-        <label for="video-upload">Upload your video:</label>
-        <input type="file" id="video-upload" accept="video/*" />
-      </div>
-      <div class="control-group">
-        <label for="video-list">Choose a video:</label>
-        <select id="video-list">
-          <option value="/leaf.mp4">Sample Video 2</option>
-          <option value="/glass-sea.mp4">Sample Video 3</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label for="caption-style">Caption Style:</label>
-        <select id="caption-style">
-          <option value="default">Default Style</option>
-          <option value="dramatic">Dramatic</option>
-          <option value="modern">Modern</option>
-          <option value="subtitle">Movie Subtitle</option>
-          <option value="minimal">Minimal</option>
-        </select>
-      </div>
-    </div>
-    <div id="player-container">
-      <div id="player"></div>
-      <div id="progress" style="display: none;">
-        <h1>80%</h1>
-      </div>
-    </div>
-    <div id="timeline">
-      <div></div>
-    </div>
-    <div id="controls">
-      <div id="playback">
-        <i data-lucide="skip-back"></i>
-        <i data-lucide="play"></i>
-        <i data-lucide="pause" style="display: none;"></i>
-        <i data-lucide="skip-forward"></i>
-      </div>
-      <span id="time">00:00 / 00:00</span>
-      <i data-lucide="gauge"></i>
-      <button id="export" type="button">
-        <div class="loader" style="display: none;"></div>
-        Export
-      </button>
-    </div>
-    <div id="export-modal" style="display: none;">
-      <div id="export-modal-content">
-        <h1>Exporting...</h1>
-        <div class="loader"></div>
-  </div>
-  <script type="module" src="playground/main.ts"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons();
-
-    document.getElementById("open-text-to-video").addEventListener("click", () => {
-      window.location.href = "text-to-video.html";
-    });
-  </script>
+<body>
+  <div id="root"></div>
+  <script type="module" src="playground/text-to-video.tsx"></script>
 </body>
 </html>
+

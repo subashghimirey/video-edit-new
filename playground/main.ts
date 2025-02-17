@@ -3,6 +3,53 @@ import captions from "../src/test/cap_tim.json";
 import { setupControls } from "./controls";
 import { setupTimeline } from "./timeline";
 
+
+interface TimingCaption {
+  token: string;
+  start: number;
+  stop: number;
+}
+
+
+// Get URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const audioUrl = urlParams.get('audioUrl');
+const timingUrl = urlParams.get('timingUrl');
+
+// Modify the fetchAudioUrl and fetchCaptions functions
+async function fetchAudioUrl() {
+    if (!audioUrl) {
+        throw new Error('No audio URL provided');
+    }
+    return audioUrl;
+}
+
+// async function fetchCaptions() {
+//     if (!timingUrl) {
+//         throw new Error('No timing URL provided');
+//     }
+//     const response = await fetch(timingUrl);
+//     const data = await response.json();
+//     return data;
+// }
+
+async function fetchCaptions() {
+    if (!timingUrl) {
+        throw new Error('No timing URL provided');
+    }
+    const response = await fetch(timingUrl);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch timing data: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Fetched timing data:', data); // Debug log to see what we're getting
+    return data;
+}
+
+
+
+
+
 // Define target dimensions for 9:16 aspect ratio at 1920x1080
 const TARGET_WIDTH = 1080; // For 9:16 ratio, width is smaller
 const TARGET_HEIGHT = 1920; // For 9:16 ratio, height is larger
@@ -190,7 +237,7 @@ async function getVideoDimensions(videoPath: string): Promise<VideoMetadata> {
 
 // Function to group captions
 function groupCaptions(
-  captions: typeof import("../src/test/cap_tim.json"),
+  captions: TimingCaption[][],
   wordsPerFrame: number
 ) {
   const groupedCaptions: Array<{
@@ -237,7 +284,7 @@ function groupCaptions(
 }
 
 // Function to load the selected video
-async function loadVideo(videoPath: string, captionStyle: string = "default") {
+async function loadVideo(videoPath: string, captionStyle: string = "default", timingData?: any) {
   try {
     // Clear existing video clips
     composition
@@ -253,24 +300,18 @@ async function loadVideo(videoPath: string, captionStyle: string = "default") {
     const dimensions = await getVideoDimensions(videoPath);
     console.log("Video dimensions: ", dimensions);
 
-    // Check if the video dimensions are valid
     if (dimensions.width === 0 || dimensions.height === 0) {
       throw new Error('Invalid video dimensions');
     }
 
-    // Load the video source
     const videoSource = await core.VideoSource.from(videoPath);
 
-    // Calculate scaling factors for both dimensions
     const scaleWidth = TARGET_WIDTH / dimensions.width;
     const scaleHeight = TARGET_HEIGHT / dimensions.height;
-
-    // Use the larger scale to ensure the video fills the frame
     const scale = Math.max(scaleWidth, scaleHeight);
 
     console.log("Scale factor: ", scale);
 
-    // Add video clip with proper scaling
     const video = await composition.add(
       new core.VideoClip(videoSource, {
         volume: 0.1,
@@ -280,9 +321,12 @@ async function loadVideo(videoPath: string, captionStyle: string = "default") {
       })
     );
 
+    // Use timingData if provided, otherwise fall back to imported captions
+    const captionsToUse = await fetchCaptions();
+    
     // Get selected caption style and group captions
     const styleConfig = captionStyles[captionStyle];
-    const groupedCaptions = groupCaptions(captions, styleConfig.wordsPerFrame);
+    const groupedCaptions = groupCaptions(captionsToUse, styleConfig.wordsPerFrame);
 
     // Add captions with selected style
     groupedCaptions.forEach((group) => {
@@ -316,14 +360,27 @@ const fileInput = document.getElementById('video-upload') as HTMLInputElement;
 videoList.addEventListener("change", async (event) => {
   const selectedVideoPath = (event.target as HTMLSelectElement).value;
   const selectedStyle = captionStyleSelect.value;
-  await loadVideo(selectedVideoPath, selectedStyle);
+  
+  try {
+    const timingData = timingUrl ? await fetchCaptions() : null;
+    await loadVideo(selectedVideoPath, selectedStyle, timingData);
+  } catch (error) {
+    console.error("Error loading video with timing data:", error);
+  }
 });
+
 
 // Handle caption style change
 captionStyleSelect.addEventListener("change", async () => {
   const selectedVideoPath = videoList.value;
   const selectedStyle = captionStyleSelect.value;
-  await loadVideo(selectedVideoPath, selectedStyle);
+  
+  try {
+    const timingData = timingUrl ? await fetchCaptions() : null;
+    await loadVideo(selectedVideoPath, selectedStyle, timingData);
+  } catch (error) {
+    console.error("Error updating caption style with timing data:", error);
+  }
 });
 
 // Handle file upload
@@ -339,13 +396,23 @@ window.addEventListener('beforeunload', cleanupUploadedVideos);
 
 // Initial setup
 (async () => {
-  // Initial video load
-  await loadVideo(videoList.value, "default");
+    try {
+        // Initial video load
+        await loadVideo(videoList.value, "default");
 
-  // Add audio
-  await composition.add(
-    new core.AudioClip(await core.AudioSource.from("/speech.wav"), {
-      transcript: core.Transcript.fromJSON(captions).optimize(),
-    })
-  );
-})(); 
+        // Add audio using the provided URL
+        if (audioUrl) {
+            const audioSource = await core.AudioSource.from(audioUrl);
+            const timingData = await fetchCaptions();
+            await composition.add(
+                new core.AudioClip(audioSource, {
+                    transcript: core.Transcript.fromJSON(timingData).optimize(),
+                })
+            );
+        }
+    } catch (error) {
+        console.error("Error in initial setup:", error);
+        console.log("Audio URL:", audioUrl);
+        console.log("Timing URL:", timingUrl);
+    }
+})();
