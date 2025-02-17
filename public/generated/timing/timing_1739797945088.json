@@ -1,0 +1,34 @@
+[
+  [
+    {
+      "token": "timro",
+      "start": 0,
+      "stop": 344
+    },
+    {
+      "token": "antarikshya",
+      "start": 344,
+      "stop": 905
+    },
+    {
+      "token": "ma",
+      "start": 905,
+      "stop": 1159
+    },
+    {
+      "token": "laijauna",
+      "start": 1159,
+      "stop": 1625
+    },
+    {
+      "token": "malai",
+      "start": 1625,
+      "stop": 1972
+    },
+    {
+      "token": "pani",
+      "start": 1972,
+      "stop": 2390
+    }
+  ]
+]

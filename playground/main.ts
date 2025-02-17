@@ -1,3 +1,4 @@
+import { start } from "repl";
 import * as core from "../src";
 import captions from "../src/test/cap_tim.json";
 import { setupControls } from "./controls";
@@ -283,6 +284,28 @@ function groupCaptions(
   return groupedCaptions;
 }
 
+async function fetchAudioDuration() {
+    if (!audioUrl) {
+        throw new Error('No audio URL provided');
+    }
+    
+    return new Promise((resolve, reject) => {
+        const tempAudio = new Audio();
+        tempAudio.src = audioUrl;
+        
+        tempAudio.onloadedmetadata = () => {
+            const duration = tempAudio.duration;
+            console.log('Audio duration:', duration, 'seconds');
+            resolve(duration);
+        };
+        
+        tempAudio.onerror = () => {
+            reject(new Error('Failed to load audio metadata'));
+        };
+    });
+}
+
+
 // Function to load the selected video
 async function loadVideo(videoPath: string, captionStyle: string = "default", timingData?: any) {
   try {
@@ -312,6 +335,19 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
 
     console.log("Scale factor: ", scale);
 
+    let startTime = 0;
+    let stopTime = 10; // Default stop time
+
+     if (audioUrl) {
+            try {
+                const audioDuration = await fetchAudioDuration();
+                stopTime = Number(audioDuration); // Use audio duration as stop time
+                console.log('Using audio duration for video stop time:', stopTime);
+            } catch (error) {
+                console.warn('Failed to get audio duration, using default stop time');
+            }
+        }
+
     const video = await composition.add(
       new core.VideoClip(videoSource, {
         volume: 0.1,
@@ -319,6 +355,8 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
         position: "center",
         scale,
       })
+      .subclip(startTime, stopTime+ 10)
+      .offsetBy(0)
     );
 
     // Use timingData if provided, otherwise fall back to imported captions

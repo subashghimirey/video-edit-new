@@ -1,0 +1,24 @@
+[
+  [
+    {
+      "token": "china",
+      "start": 0,
+      "stop": 338
+    },
+    {
+      "token": "china",
+      "start": 338,
+      "stop": 670
+    },
+    {
+      "token": "china",
+      "start": 670,
+      "stop": 1061
+    },
+    {
+      "token": "v",
+      "start": 1067,
+      "stop": 1352
+    }
+  ]
+]
