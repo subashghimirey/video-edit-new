@@ -22,6 +22,17 @@
         </select>
       </div>
       <div class="control-group">
+        <label for="video-size">Video Size Format:</label>
+        <select id="video-size">
+          <option value="9:16 Portrait (1080x1920)">9:16 Portrait - TikTok/Instagram Reels (1080x1920)</option>
+          <option value="16:9 Landscape (1920x1080)">16:9 Landscape - YouTube/Standard HD (1920x1080)</option>
+          <option value="1:1 Square (1080x1080)">1:1 Square - Instagram/Facebook (1080x1080)</option>
+          <option value="4:5 Portrait (1080x1350)">4:5 Portrait - Instagram Post (1080x1350)</option>
+          <option value="4:3 Landscape (1440x1080)">4:3 Landscape - Traditional TV (1440x1080)</option>
+          <option value="21:9 Ultrawide (2560x1080)">21:9 Ultrawide - Cinematic (2560x1080)</option>
+        </select>
+      </div>
+      <div class="control-group">
         <label for="caption-style">Caption Style:</label>
         <select id="caption-style">
           <option value="default">Default Style</option>
@@ -59,6 +70,8 @@
       <div id="export-modal-content">
         <h1>Exporting...</h1>
         <div class="loader"></div>
+      </div>
+    </div>
   </div>
   <script type="module" src="playground/main.ts"></script>
   <script src="https://unpkg.com/lucide@latest"></script>

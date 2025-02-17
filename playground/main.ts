@@ -1,3 +1,4 @@
+import { start } from "repl";
 import * as core from "../src";
 import captions from "../src/test/cap_tim.json";
 import { setupControls } from "./controls";
@@ -24,15 +25,6 @@ async function fetchAudioUrl() {
     return audioUrl;
 }
 
-// async function fetchCaptions() {
-//     if (!timingUrl) {
-//         throw new Error('No timing URL provided');
-//     }
-//     const response = await fetch(timingUrl);
-//     const data = await response.json();
-//     return data;
-// }
-
 async function fetchCaptions() {
     if (!timingUrl) {
         throw new Error('No timing URL provided');
@@ -46,16 +38,22 @@ async function fetchCaptions() {
     return data;
 }
 
+// Define video size presets
+const videoSizes = {
+  "9:16 Portrait (1080x1920)": { width: 1080, height: 1920, name: "TikTok/Instagram Reels/Stories" },
+  "16:9 Landscape (1920x1080)": { width: 1920, height: 1080, name: "YouTube/Standard HD" },
+  "1:1 Square (1080x1080)": { width: 1080, height: 1080, name: "Instagram/Facebook" },
+  "4:5 Portrait (1080x1350)": { width: 1080, height: 1350, name: "Instagram Post" },
+  "4:3 Landscape (1440x1080)": { width: 1440, height: 1080, name: "Traditional TV" },
+  "21:9 Ultrawide (2560x1080)": { width: 2560, height: 1080, name: "Cinematic" },
+};
 
+// Set default size
+let TARGET_WIDTH = 1080;
+let TARGET_HEIGHT = 1920;
 
-
-
-// Define target dimensions for 9:16 aspect ratio at 1920x1080
-const TARGET_WIDTH = 1080; // For 9:16 ratio, width is smaller
-const TARGET_HEIGHT = 1920; // For 9:16 ratio, height is larger
-
-// Initialize the composition with target dimensions
-const composition = new core.Composition({
+// Initialize the composition with default dimensions
+let composition = new core.Composition({
   width: TARGET_WIDTH,
   height: TARGET_HEIGHT,
 });
@@ -175,6 +173,34 @@ const captionStyles: Record<string, CaptionGrouping> = {
   },
 };
 
+// Function to recreate composition with new dimensions
+function recreateComposition(width: number, height: number) {
+  // Create new composition with selected dimensions
+  const newComposition = new core.Composition({
+    width: width,
+    height: height,
+  });
+  
+  // Set up controls and timeline for new composition
+  setupControls(newComposition);
+  setupTimeline(newComposition);
+  
+  // Update global composition reference
+  composition = newComposition;
+  
+  // Update target dimensions
+  TARGET_WIDTH = width;
+  TARGET_HEIGHT = height;
+  
+  // Reload the current video with new dimensions
+  const selectedVideoPath = videoList.value;
+  const selectedStyle = captionStyleSelect.value;
+  
+  loadVideo(selectedVideoPath, selectedStyle);
+  
+  console.log(`Composition resized to ${width}x${height}`);
+}
+
 // Function to handle file uploads
 async function handleFileUpload(file: File): Promise<void> {
   try {
@@ -283,7 +309,6 @@ function groupCaptions(
   return groupedCaptions;
 }
 
-
 async function fetchAudioDuration() {
     if (!audioUrl) {
         throw new Error('No audio URL provided');
@@ -304,7 +329,6 @@ async function fetchAudioDuration() {
         };
     });
 }
-
 
 // Function to load the selected video
 async function loadVideo(videoPath: string, captionStyle: string = "default", timingData?: any) {
@@ -336,7 +360,7 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
     console.log("Scale factor: ", scale);
 
     let startTime = 0;
-    let stopTime = 1000; // Default stop time
+    let stopTime = 10; // Default stop time
 
      if (audioUrl) {
             try {
@@ -355,7 +379,7 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
         position: "center",
         scale,
       })
-      .subclip(startTime, stopTime + 50)
+      .subclip(startTime, stopTime+ 50)
       .offsetBy(0)
     );
 
@@ -389,10 +413,9 @@ async function loadVideo(videoPath: string, captionStyle: string = "default", ti
 
 // Set up event listeners
 const videoList = document.getElementById("video-list") as HTMLSelectElement;
-const captionStyleSelect = document.getElementById(
-  "caption-style"
-) as HTMLSelectElement;
+const captionStyleSelect = document.getElementById("caption-style") as HTMLSelectElement;
 const fileInput = document.getElementById('video-upload') as HTMLInputElement;
+const videoSizeSelect = document.getElementById('video-size') as HTMLSelectElement;
 
 // Handle video selection change
 videoList.addEventListener("change", async (event) => {
@@ -407,7 +430,6 @@ videoList.addEventListener("change", async (event) => {
   }
 });
 
-
 // Handle caption style change
 captionStyleSelect.addEventListener("change", async () => {
   const selectedVideoPath = videoList.value;
@@ -418,6 +440,16 @@ captionStyleSelect.addEventListener("change", async () => {
     await loadVideo(selectedVideoPath, selectedStyle, timingData);
   } catch (error) {
     console.error("Error updating caption style with timing data:", error);
+  }
+});
+
+// Handle video size selection change
+videoSizeSelect.addEventListener("change", async () => {
+  const selectedSize = videoSizeSelect.value;
+  const sizeConfig = videoSizes[selectedSize];
+  
+  if (sizeConfig) {
+    recreateComposition(sizeConfig.width, sizeConfig.height);
   }
 });
 
